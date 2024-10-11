@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro Dinámico de Tabla</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Filtrar Tabla</h1>
+        <!-- Input para filtrar la tabla -->
+        <input type="text" id="search" onkeyup="filterTable()" placeholder="Busca por nombres, países, etc...">
+
+        <!-- Tabla de datos -->
+        <table id="dataTable">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Edad</th>
+                    <th>País</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Sofía</td>
+                    <td>25</td>
+                    <td>Perú</td>
+                </tr>
+                <tr>
+                    <td>Diego</td>
+                    <td>30</td>
+                    <td>Brasil</td>
+                </tr>
+                <tr>
+                    <td>Isabella</td>
+                    <td>27</td>
+                    <td>Argentina</td>
+                </tr>
+                <tr>
+                    <td>Lucas</td>
+                    <td>22</td>
+                    <td>Chile</td>
+                </tr>
+                <tr>
+                    <td>Valentina</td>
+                    <td>29</td>
+                    <td>Colombia</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Mensaje para no resultados -->
+        <div id="noResults" class="no-results" style="display: none;">No se encontraron resultados.</div>
+    </div>
+
+    <script>
+        // Función para filtrar la tabla en función del texto ingresado en el input
+        function filterTable() {
+            const input = document.getElementById("search"); // Captura el input de búsqueda
+            const filter = input.value.toLowerCase(); // Convierte el valor a minúsculas
+            const table = document.getElementById("dataTable"); // Selecciona la tabla
+            const trs = table.getElementsByTagName("tr"); // Selecciona todas las filas (tr)
+            let hasResults = false; // Variable para rastrear si hay resultados
+
+            // Itera sobre todas las filas de la tabla, comenzando desde la fila 1 (para evitar el encabezado)
+            for (let i = 1; i < trs.length; i++) {
+                let row = trs[i]; // Fila actual
+                let rowText = row.innerText.toLowerCase(); // Convierte el contenido de la fila a minúsculas
+
+                // Si el texto de la fila incluye el valor del filtro, se muestra; si no, se oculta
+                if (rowText.includes(filter)) {
+                    row.style.display = ""; // Muestra la fila
+                    hasResults = true; // Hay al menos un resultado
+                } else {
+                    row.style.display = "none"; // Oculta la fila
+                }
+            }
+
+            // Mostrar u ocultar el mensaje de "no resultados"
+            document.getElementById("noResults").style.display = hasResults ? "none" : "block";
+        }
+    </script>
+
+</body>
+
+</html>
